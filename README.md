@@ -18,15 +18,10 @@ Entwickelt für maximale Performance (konstante 60 FPS), kompromisslose Privatsp
 | [![Startbildschirm](docs/screenshots/01_home_screen.png)](docs/screenshots/01_home_screen.png) | [![Weiterschauen](docs/screenshots/02_keep_watching_shelf.png)](docs/screenshots/02_keep_watching_shelf.png) |
 | *Tiefeneffekt-Uhr hinter Bergkamm, Live-Wetter und Frosted Dock* | *Fokussierte Sendungskarte mit Poster, Badge und Fortschrittsbalken* |
 
-| 03. Google TV Schnelleinstellungen | 04. Launcher-Einstellungen |
+| 03. Launcher-Einstellungen | 04. Alle Apps (App-Drawer) |
 |:---:|:---:|
-| [![Schnelleinstellungen](docs/screenshots/03_quick_settings_panel.png)](docs/screenshots/03_quick_settings_panel.png) | [![Einstellungen](docs/screenshots/04_launcher_settings.png)](docs/screenshots/04_launcher_settings.png) |
-| *Nahtlose Integration des Google TV Schnellzugriffs-Panels* | *Frosted Glasdialog für Hintergründe, Tiefeneffekt und Wetter* |
-
-| 05. Alle Apps (App-Drawer) |
-|:---:|
-| [![App Drawer](docs/screenshots/05_app_drawer.png)](docs/screenshots/05_app_drawer.png) |
-| *6-spaltiges App-Grid im Frosted-Design für alle TV- und Sideload-Apps* |
+| [![Einstellungen](docs/screenshots/03_launcher_settings.png)](docs/screenshots/03_launcher_settings.png) | [![App Drawer](docs/screenshots/04_app_drawer.png)](docs/screenshots/04_app_drawer.png) |
+| *Frosted Glasdialog für Hintergründe, Tiefeneffekt und Wetter* | *Natives 6-Spalten Grid im Frosted-Design für alle installierten Apps* |
 
 ---
 
@@ -126,6 +121,12 @@ adb shell pm grant com.flankes.glasslauncher android.permission.READ_TV_LISTINGS
 # 4. Als Standard-Launcher festlegen:
 # Home-Taste auf der Fernbedienung drücken und "Frost TV Launcher" -> "Immer" wählen
 ```
+
+---
+
+## 🙏 Inspiration & Danksagung
+
+Ein besonderer Dank geht an das Projekt **[Couch TV](https://github.com/couch-tv/couch-tv)** (`couch-tv/couch-tv`), dessen minimalistische Designphilosophie und aufgeräumte Ästhetik als direkte Inspiration für die Konzeption und Benutzeroberfläche des Frost TV Launchers dienten.
 
 ---
 

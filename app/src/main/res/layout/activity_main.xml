@@ -906,6 +906,8 @@
                     android:id="@+id/tv_about_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lineSpacingExtra="5dp"
+                    android:lineSpacingMultiplier="1.25"
                     android:text="Inspiriert von der minimalistischen Designphilosophie von Couch TV (GitHub: couch-tv/couch-tv). Von Grund auf eigenständig und nativ für Android TV und Google TV entwickelt."
                     android:textColor="#90FFFFFF"
                     android:textSize="12sp" />
