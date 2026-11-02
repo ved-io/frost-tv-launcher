@@ -1,0 +1,917 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="false"
+    android:descendantFocusability="afterDescendants"
+    android:background="@android:color/black">
+
+    <!-- LAYER 0: Background Wallpaper -->
+    <ImageView
+        android:id="@+id/wallpaper_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
+
+    <!-- LAYER 1: Center Glass Clock (Antonio Light 300, Authentic Couch TV Ratio & Spacing) -->
+    <com.flankes.glasslauncher.ui.GlassClockView
+        android:id="@+id/clock_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="78dp"
+        android:fontFamily="@font/antonio_light"
+        android:includeFontPadding="false"
+        android:letterSpacing="-0.02"
+        android:lineSpacingMultiplier="0.82"
+        android:textSize="212sp" />
+
+    <!-- LAYER 2: Foreground Mountain Cutout (creates authentic depth effect) -->
+    <ImageView
+        android:id="@+id/wallpaper_fg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
+
+    <!-- LAYER 3: Date & Weather (Directly and closely above the clock) -->
+    <TextView
+        android:id="@+id/date_weather_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="82dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:shadowColor="#99000000"
+        android:shadowRadius="14"
+        android:shadowDy="2"
+        android:text="Donnerstag, 29. Oktober" />
+
+    <!-- LAYER 4: Settings Gear Button (Top Right Corner) -->
+    <FrameLayout
+        android:id="@+id/settings_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="38dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/glass_circle_selector"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_gear"
+            android:tint="#CCFFFFFF"
+            android:contentDescription="@string/settings_title" />
+    </FrameLayout>
+
+    <!-- LAYER 4b: Settings Gear Dropdown Popup (Directly below gear button) -->
+    <LinearLayout
+        android:id="@+id/gear_popup"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <TextView
+            android:id="@+id/btn_popup_launcher_settings"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:background="@drawable/btn_popup_item_selector"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:text="Launcher-Einstellungen"
+            android:textColor="@color/btn_settings_text_selector"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/btn_popup_system_settings"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/btn_popup_item_selector"
+            android:gravity="center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:text="TV-Systemeinstellungen"
+            android:textColor="@color/btn_settings_text_selector"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+    <!-- LAYER 5: Keep Watching Shelf (moved down closer to dock so it is not too close to the clock) -->
+    <FrameLayout
+        android:id="@+id/shelf_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="118dp"
+        android:clipChildren="true"
+        android:clipToPadding="false"
+        android:visibility="gone">
+
+        <com.flankes.glasslauncher.ui.RightFadingRecyclerView
+            android:id="@+id/shelf_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:requiresFadingEdge="horizontal"
+            android:fadingEdgeLength="64dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:descendantFocusability="afterDescendants"
+            android:defaultFocusHighlightEnabled="false" />
+    </FrameLayout>
+
+    <!-- LAYER 6: Frosted Glass Dock (Single Row of Pinned Apps, dynamic width wraps count) -->
+    <FrameLayout
+        android:id="@+id/dock_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/glass_dock_bg"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dock_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:descendantFocusability="afterDescendants"
+            android:defaultFocusHighlightEnabled="false" />
+    </FrameLayout>
+
+    <!-- LAYER 7: All Apps Container (Row 1 = Dock Apps, Divider Line, Rows Below = Remaining Apps) -->
+    <FrameLayout
+        android:id="@+id/drawer_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/glass_dock_bg"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingTop="11dp"
+        android:paddingBottom="11dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- ROW 1: Dock Apps Only -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/drawer_dock_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:descendantFocusability="afterDescendants"
+                android:defaultFocusHighlightEnabled="false" />
+
+            <!-- DIVIDER LINE: Subtle Translucent Glass Divider ("leichter Strich") -->
+            <View
+                android:id="@+id/drawer_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#26FFFFFF" />
+
+            <!-- BELOW: All Other Apps in Grid -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/drawer_remaining_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:descendantFocusability="afterDescendants"
+                android:defaultFocusHighlightEnabled="false" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- LAYER 8: In-Place Launcher Settings Panel (Replaces Dock and Shelf in Same Frosted Glass) -->
+    <LinearLayout
+        android:id="@+id/settings_panel_container"
+        android:layout_width="920dp"
+        android:layout_height="270dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        android:background="@drawable/glass_dock_bg"
+        android:padding="16dp"
+        android:visibility="gone"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <!-- LEFT COLUMN: Categories Sidebar -->
+        <ScrollView
+            android:id="@+id/sidebar_scroll"
+            android:layout_width="165dp"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="2dp"
+                android:paddingBottom="6dp">
+
+                <TextView
+                    android:id="@+id/tv_sidebar_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EINSTELLUNGEN"
+                    android:textColor="#80FFFFFF"
+                    android:textSize="11sp"
+                    android:letterSpacing="0.08"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="8dp"
+                    android:paddingStart="8dp" />
+
+                <TextView
+                    android:id="@+id/tab_category_lang"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:background="@drawable/btn_settings_tab_active_selector"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:nextFocusUp="@+id/tab_category_lang"
+                    android:nextFocusLeft="@+id/tab_category_lang"
+                    android:text="Sprache"
+                    android:textColor="@color/btn_settings_text_selector"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/tab_category_wallpaper"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:background="@drawable/btn_settings_tab_selector"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:nextFocusLeft="@+id/tab_category_wallpaper"
+                    android:text="Hintergrund"
+                    android:textColor="@color/btn_settings_text_selector"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/tab_category_weather"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:background="@drawable/btn_settings_tab_selector"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:nextFocusLeft="@+id/tab_category_weather"
+                    android:text="Wetter"
+                    android:textColor="@color/btn_settings_text_selector"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/tab_category_about"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:background="@drawable/btn_settings_tab_selector"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:nextFocusLeft="@+id/tab_category_about"
+                    android:text="Über"
+                    android:textColor="@color/btn_settings_text_selector"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/btn_close_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:background="@drawable/btn_settings_pill_selector"
+                    android:gravity="center"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:nextFocusDown="@+id/btn_close_settings"
+                    android:nextFocusLeft="@+id/btn_close_settings"
+                    android:text="Schließen"
+                    android:textColor="@color/btn_settings_text_selector"
+                    android:textSize="12sp"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- VERTICAL DIVIDER -->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="18dp"
+            android:background="#20FFFFFF" />
+
+        <!-- RIGHT CONTENT FRAME -->
+        <FrameLayout
+            android:id="@+id/settings_content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- VIEW 1: LANGUAGE -->
+            <LinearLayout
+                android:id="@+id/panel_view_language"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_lang_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Spracheinstellungen"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="17sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/tv_lang_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wähle die Sprache für die Benutzeroberfläche, Datum und Wetter:"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="13sp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="22dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:id="@+id/btn_lang_de"
+                        android:layout_width="104dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/btn_settings_pill_active_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_lang_de"
+                        android:nextFocusLeft="@+id/tab_category_lang"
+                        android:text="Deutsch"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_lang_en"
+                        android:layout_width="104dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_lang_en"
+                        android:text="English"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_lang_es"
+                        android:layout_width="104dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_lang_es"
+                        android:text="Español"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_lang_fr"
+                        android:layout_width="104dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_lang_fr"
+                        android:text="Français"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_lang_pt"
+                        android:layout_width="104dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_lang_pt"
+                        android:text="Português"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_lang_it"
+                        android:layout_width="104dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_lang_it"
+                        android:text="Italiano"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_lang_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#A0FFFFFF"
+                    android:textSize="13sp"
+                    android:text="Aktuelle Sprache: Deutsch" />
+            </LinearLayout>
+
+            <!-- VIEW 2: WALLPAPER & DEPTH -->
+            <LinearLayout
+                android:id="@+id/panel_view_wallpaper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_wp_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hintergrund &amp; Tiefeneffekt"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="17sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="18dp" />
+
+                <!-- Depth Toggle Row -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_wp_depth_label"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:text="Uhr-Tiefeneffekt (hinter Bergen):"
+                        android:textColor="#E0FFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_depth_on"
+                        android:layout_width="95dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_settings_pill_active_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_depth_on"
+                        android:nextFocusLeft="@+id/tab_category_wallpaper"
+                        android:text="Aktiviert"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btn_depth_off"
+                        android:layout_width="95dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_depth_off"
+                        android:text="Deaktiviert"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Wallpaper Selection Row -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/tv_wp_source_label"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:text="Hintergrundbild-Quelle:"
+                        android:textColor="#E0FFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/btn_wp_default"
+                        android:layout_width="145dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_settings_pill_active_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:text="Alpenpanorama"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btn_wp_custom_reload"
+                        android:layout_width="180dp"
+                        android:layout_height="34dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:text="Aus /sdcard/ laden"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btn_wp_open_files"
+                        android:layout_width="140dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:text="Dateien öffnen"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_wp_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#90FFFFFF"
+                    android:textSize="12sp"
+                    android:text="Eigene Bilder: 'wallpaper.jpg' und 'wallpaper_fg.png' in Ordner /sdcard/Wallpapers/ ablegen." />
+            </LinearLayout>
+
+            <!-- VIEW 3: WEATHER (Full search, no hardcoded cities) -->
+            <LinearLayout
+                android:id="@+id/panel_view_weather"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_weather_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wetteranzeige (Open-Meteo)"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="17sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Row 1: Weather On/Off + Temp Unit + Interval -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_weather_toggle_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wetter:"
+                        android:textColor="#E0FFFFFF"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/btn_weather_on"
+                        android:layout_width="56dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/btn_settings_pill_active_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_weather_on"
+                        android:nextFocusLeft="@+id/tab_category_weather"
+                        android:text="Ein"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btn_weather_off"
+                        android:layout_width="56dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_weather_off"
+                        android:text="Aus"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_weather_unit_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Einheit:"
+                        android:textColor="#E0FFFFFF"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/btn_unit_c"
+                        android:layout_width="52dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/btn_settings_pill_active_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_unit_c"
+                        android:text="°C"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btn_unit_f"
+                        android:layout_width="52dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_unit_f"
+                        android:text="°F"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_weather_interval_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Intervall:"
+                        android:textColor="#E0FFFFFF"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/btn_interval_15"
+                        android:layout_width="72dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_interval_15"
+                        android:text="15 Min"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btn_interval_30"
+                        android:layout_width="72dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/btn_settings_pill_active_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_interval_30"
+                        android:text="30 Min"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btn_interval_60"
+                        android:layout_width="72dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:nextFocusUp="@+id/btn_interval_60"
+                        android:text="60 Min"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Row 2: Current City Status -->
+                <TextView
+                    android:id="@+id/tv_current_city_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Aktuelle Stadt: Berlin (DE) • 52.52° N, 13.41° E"
+                    android:textColor="#D0FFFFFF"
+                    android:textSize="13sp" />
+
+                <!-- Row 3: City Search Input Field & Search Button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tv_weather_search_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stadt suchen:"
+                        android:textColor="#E0FFFFFF"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="12dp" />
+
+                    <EditText
+                        android:id="@+id/et_search_city"
+                        android:layout_width="290dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/edittext_search_bg"
+                        android:gravity="center_vertical"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:singleLine="true"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:hint="Stadtname eingeben..."
+                        android:textColorHint="#60FFFFFF"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true" />
+
+                    <TextView
+                        android:id="@+id/btn_search_city"
+                        android:layout_width="95dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/btn_settings_pill_selector"
+                        android:gravity="center"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:text="Suchen"
+                        android:textColor="@color/btn_settings_text_selector"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_search_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:textColor="#A0FFFFFF"
+                        android:textSize="13sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <!-- Row 4: Search Results List (Dynamically populated with result pill buttons) -->
+                <LinearLayout
+                    android:id="@+id/city_results_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+
+                    <!-- Results pills will be added dynamically here -->
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- VIEW 4: ABOUT -->
+            <LinearLayout
+                android:id="@+id/panel_view_about"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_about_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Über Frost TV Launcher"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="17sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_about_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="Version: v1.3.0 Native Edition"
+                    android:textColor="#E0FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_about_arch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:text="100% Native Java &amp; AndroidX • Keine Web-Engine • Keine Tracker"
+                    android:textColor="#C0FFFFFF"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_about_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Inspiriert von der minimalistischen Designphilosophie von Couch TV (GitHub: couch-tv/couch-tv). Von Grund auf eigenständig und nativ für Android TV und Google TV entwickelt."
+                    android:textColor="#90FFFFFF"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </FrameLayout>
+    </LinearLayout>
+
+</FrameLayout>

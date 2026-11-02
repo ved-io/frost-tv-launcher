@@ -1,0 +1,19 @@
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_90">#E6FFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
+    <color name="white_30">#4DFFFFFF</color>
+    <color name="white_20">#33FFFFFF</color>
+    <color name="white_12">#1FFFFFFF</color>
+    <color name="white_08">#14FFFFFF</color>
+
+    <!-- Couch TV Authentischer Milchglas-Effekt (Milky Frosted Glass with white mist sheen) -->
+    <color name="glass_dark_base">#BF222736</color>
+    <color name="glass_card_base">#BF272E3F</color>
+    <color name="glass_dialog_base">#E6181D28</color>
+
+    <color name="clock_color">#F8FFFFFF</color>
+    <color name="focus_border">#FFFFFFFF</color>
+</resources>

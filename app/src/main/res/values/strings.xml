@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Frost TV Launcher</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_wallpaper">Hintergrundbild</string>
+    <string name="settings_wallpaper_sub">Szenen mit Tiefeneffekt oder eigene Bilder wählen</string>
+    <string name="settings_depth">Tiefeneffekt Uhr</string>
+    <string name="settings_depth_sub">Digitaluhr hinter Bergsilhouette platzieren</string>
+    <string name="settings_weather">Wetter &amp; Standort</string>
+    <string name="settings_weather_sub">Koordinaten für Temperatur &amp; Wetterlage</string>
+    <string name="settings_system">TV Systemeinstellungen</string>
+    <string name="settings_system_sub">Netzwerk, Ton, Bild &amp; Konten öffnen</string>
+    <string name="all_apps_title">Alle Apps</string>
+    <string name="weather_loading">Wetter laden…</string>
+    <string name="close">Schließen</string>
+    <string name="accessibility_desc">Ermöglicht den schnellen Zugriff auf Google TV Schnelleinstellungen und sichere Rückkehr zum Launcher.</string>
+</resources>

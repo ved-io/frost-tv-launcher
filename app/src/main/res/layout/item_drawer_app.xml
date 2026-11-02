@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_item_root"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_marginStart="9.5dp"
+    android:layout_marginEnd="9.5dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:background="@android:color/transparent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:clickable="true">
+
+    <ImageView
+        android:id="@+id/drawer_app_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null" />
+
+    <View
+        android:id="@+id/drawer_focus_border"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/glass_focus_border"
+        android:visibility="gone" />
+
+    <!-- Subtle Mini Reorder Left Arrow -->
+    <ImageView
+        android:id="@+id/drawer_arrow_left"
+        android:layout_width="7dp"
+        android:layout_height="12dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_marginStart="-8.5dp"
+        android:src="@drawable/ic_arrow_left"
+        android:visibility="gone"
+        android:contentDescription="@null" />
+
+    <!-- Subtle Mini Reorder Right Arrow -->
+    <ImageView
+        android:id="@+id/drawer_arrow_right"
+        android:layout_width="7dp"
+        android:layout_height="12dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="-8.5dp"
+        android:src="@drawable/ic_arrow_right"
+        android:visibility="gone"
+        android:contentDescription="@null" />
+
+</FrameLayout>
