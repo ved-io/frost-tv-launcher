@@ -21,6 +21,7 @@ public class DockAdapter extends RecyclerView.Adapter<DockAdapter.ViewHolder> {
         void onOrderChanged(List<AppItem> currentItems);
         void onDownPressed();
         void onUpPressed();
+        void onLeftAtStart();
     }
 
     private final List<AppItem> items;
@@ -233,6 +234,11 @@ public class DockAdapter extends RecyclerView.Adapter<DockAdapter.ViewHolder> {
                 } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
                     if (listener != null) {
                         listener.onUpPressed();
+                        return true;
+                    }
+                } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT && pos == 0) {
+                    if (event.getRepeatCount() == 0 && listener != null) {
+                        listener.onLeftAtStart();
                         return true;
                     }
                 }

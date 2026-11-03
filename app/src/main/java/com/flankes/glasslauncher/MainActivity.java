@@ -442,6 +442,11 @@ public class MainActivity extends Activity {
                     settingsButton.requestFocus();
                 }
             }
+
+            @Override
+            public void onLeftAtStart() {
+                openSystemQuickSettings();
+            }
         });
 
         dockRecycler.setAdapter(dockAdapter);
@@ -778,7 +783,13 @@ public class MainActivity extends Activity {
 
         btnPopupSystemSettings.setOnClickListener(v -> {
             gearPopup.setVisibility(View.GONE);
-            openSystemQuickSettings();
+            try {
+                Intent fullSettingsIntent = new Intent(Settings.ACTION_SETTINGS);
+                fullSettingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(fullSettingsIntent);
+            } catch (Exception e) {
+                Toast.makeText(this, "Systemeinstellungen konnten nicht geöffnet werden.", Toast.LENGTH_SHORT).show();
+            }
         });
 
         btnPopupLauncherSettings.setOnKeyListener((v, keyCode, event) -> {
@@ -990,24 +1001,7 @@ public class MainActivity extends Activity {
             return;
         }
 
-        // 2. Direct intent for Google TV DashboardHandler
-        try {
-            Intent panelIntent = new Intent("android.app.action.TOGGLE_NOTIFICATION_HANDLER_PANEL");
-            panelIntent.setPackage("com.google.android.apps.tv.launcherx");
-            panelIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(panelIntent);
-            return;
-        } catch (Exception ignored) {}
-
-        // 3. Fallback: try statusbar command
-        try {
-            Process p = Runtime.getRuntime().exec(new String[]{"cmd", "statusbar", "expand-notifications"});
-            if (p.waitFor() == 0) {
-                return;
-            }
-        } catch (Exception ignored) {}
-
-        // 4. Fallback to standard full TV settings
+        // 2. Fallback to standard full TV settings
         try {
             Intent fullSettingsIntent = new Intent(Settings.ACTION_SETTINGS);
             fullSettingsIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

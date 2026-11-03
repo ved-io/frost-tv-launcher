@@ -9,7 +9,7 @@ import com.flankes.glasslauncher.MainActivity;
 /**
  * Lightweight helper service that:
  * 1. Provides instant access to the native Google TV Quick Settings side panel
- *    via performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS).
+ *    via performGlobalAction(GLOBAL_ACTION_QUICK_SETTINGS / GLOBAL_ACTION_NOTIFICATIONS).
  * 2. Redirects stock Google TV HomeActivity back to Frost TV Launcher if Home is pressed.
  */
 public class TvHelperService extends AccessibilityService {
@@ -40,7 +40,7 @@ public class TvHelperService extends AccessibilityService {
         info.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED;
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
         info.flags = AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
-        info.notificationTimeout = 50;
+        info.notificationTimeout = 0;
         setServiceInfo(info);
     }
 
@@ -54,7 +54,8 @@ public class TvHelperService extends AccessibilityService {
                 if (cls != null && cls.toString().contains("HomeActivity")) {
                     Intent home = new Intent(this, MainActivity.class);
                     home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(home);
+                    android.app.ActivityOptions options = android.app.ActivityOptions.makeCustomAnimation(this, 0, 0);
+                    startActivity(home, options.toBundle());
                 }
             }
         }
